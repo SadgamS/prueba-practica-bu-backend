@@ -9,6 +9,7 @@ import com.prueba.banco.core.authentication.service.AuthenticationService;
 import com.prueba.banco.core.config.response.ResponseRest;
 import com.prueba.banco.core.usuario.dto.RegistrarUsuarioDto;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,7 @@ public class AuthenticationController {
 
     @PostMapping("/registrar")
     public ResponseEntity<ResponseRest<AuthenticationResponse>> registrar(
-            @RequestBody RegistrarUsuarioDto registrarUsuarioDto) {
+            @Valid @RequestBody RegistrarUsuarioDto registrarUsuarioDto) {
         AuthenticationResponse responseAuth = authenticationService.registrar(registrarUsuarioDto);
 
         ResponseRest<AuthenticationResponse> response = new ResponseRest<>();
@@ -39,7 +40,7 @@ public class AuthenticationController {
 
     @PostMapping("/login")
     public ResponseEntity<ResponseRest<AuthenticationResponse>> login(
-            @RequestBody AuthenticationDto authenticationDto) {
+            @Valid @RequestBody AuthenticationDto authenticationDto) {
         AuthenticationResponse responseAuth = authenticationService.authenticate(authenticationDto);
 
         ResponseRest<AuthenticationResponse> response = new ResponseRest<>();
