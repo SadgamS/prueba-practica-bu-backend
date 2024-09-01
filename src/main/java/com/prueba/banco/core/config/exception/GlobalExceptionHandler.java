@@ -1,10 +1,12 @@
 package com.prueba.banco.core.config.exception;
 
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -16,11 +18,21 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ResponseErrorDto> handleException(Exception ex) {
 
+        if (ex instanceof AuthenticationException) {
+            return buildResponseErrorDto(HttpStatus.UNAUTHORIZED, new RuntimeException("Tiene que autenticarse"),
+                    "No se ha autenticado");
+        }
+        
         if (ex instanceof BadCredentialsException) {
             return buildResponseErrorDto(HttpStatus.UNAUTHORIZED, new RuntimeException("Credenciales incorrectas"),
-                    "Usuario o contraseña incorrectos");
+            "Usuario o contraseña incorrectos");
         }
 
+        if (ex instanceof AccessDeniedException) {
+            return buildResponseErrorDto(HttpStatus.FORBIDDEN, new RuntimeException("Acceso denegado"),
+                    "No tiene permisos para acceder a este recurso");
+        }
+        
         if (ex instanceof MethodArgumentNotValidException) {
             List<String> errores = new java.util.ArrayList<>();
             ((MethodArgumentNotValidException) ex).getBindingResult().getFieldErrors().forEach(error -> {
