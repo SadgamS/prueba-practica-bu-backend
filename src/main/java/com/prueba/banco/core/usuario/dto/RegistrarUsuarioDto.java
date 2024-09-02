@@ -3,11 +3,13 @@ package com.prueba.banco.core.usuario.dto;
 import java.time.LocalDate;
 import java.util.Set;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.prueba.banco.common.constantes.RoleEnum;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Null;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -32,7 +34,6 @@ public class RegistrarUsuarioDto {
     @Pattern(regexp = "^[a-zA-Z ]+$", message = "El apellido paterno solo puede contener letras")
     private String apellidoPaterno;
 
-    @Null
     private String apellidoMaterno;
 
     @NotBlank(message = "El tipo de documento es obligatorio")
@@ -45,8 +46,8 @@ public class RegistrarUsuarioDto {
     private String documentoIdentidad;
 
     @NotNull(message = "La fecha de nacimiento es obligatoria")
-    @NotBlank(message = "La fecha de nacimiento es obligatoria")
-    @Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}$", message = "La fecha de nacimiento debe tener el formato yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @Past(message = "La fecha de nacimiento debe ser menor a la fecha actual")
     private LocalDate fechaNacimiento;
 
@@ -66,7 +67,6 @@ public class RegistrarUsuarioDto {
     private String password;
 
     @NotNull(message = "Los roles son obligatorios")
-    @NotBlank(message = "Los roles son obligatorios")
     @Size(min = 1, message = "Debe seleccionar al menos un rol")
     private Set<RoleEnum> roles;
 }

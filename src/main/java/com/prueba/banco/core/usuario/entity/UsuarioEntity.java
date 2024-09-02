@@ -8,6 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.prueba.banco.core.authorization.entity.RolEntity;
 import com.prueba.banco.core.authorization.entity.UsuarioRolEntity;
 import com.prueba.banco.core.config.auditing.entity.AuditEntity;
@@ -56,6 +57,7 @@ public class UsuarioEntity extends AuditEntity implements UserDetails {
     @JoinColumn(name = "id_persona", referencedColumnName = "id")
     private PersonaEntity persona;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<UsuarioRolEntity> roles;
 

@@ -7,6 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.prueba.banco.application.cliente.service.ClienteService;
 import com.prueba.banco.core.authorization.entity.UsuarioRolEntity;
 import com.prueba.banco.core.authorization.service.RolService;
 import com.prueba.banco.core.usuario.dto.CrearPersonaDto;
@@ -24,6 +25,7 @@ public class UsuarioService {
     private final PersonaService personaService;
     private final PasswordEncoder passwordEncoder;
     private final RolService rolService;
+    private final ClienteService clienteService;
 
     
     public UsuarioEntity obtenerUsuarioPorUserName(String username) {
@@ -32,6 +34,12 @@ public class UsuarioService {
 
     @Transactional
     public UsuarioEntity crearUsuario(RegistrarUsuarioDto registrarUsuarioDto) {
+
+        var personaExistente = personaService.existePersonaPorDocumentoIdentidad(registrarUsuarioDto.getDocumentoIdentidad());
+
+        if (personaExistente) {
+            throw new RuntimeException("Ya existe una persona con el documento de identidad ingresado");
+        }
 
         var personaDto = CrearPersonaDto.builder()
                 .nombres(registrarUsuarioDto.getNombres())
@@ -65,6 +73,10 @@ public class UsuarioService {
         
         usuario.setRoles(usuariosRoles);
 
-        return usuarioRepository.save(usuario);
+        var usuarioGuardado = usuarioRepository.save(usuario);
+
+        clienteService.crearCliente(usuarioGuardado);
+
+        return usuarioGuardado;
     }
 }

@@ -1,5 +1,6 @@
 package com.prueba.banco.core.usuario.service;
 
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import com.prueba.banco.core.usuario.dto.CrearPersonaDto;
@@ -23,7 +24,12 @@ public class PersonaService {
                 .fechaNacimiento(crearPersonaDto.getFechaNacimiento())
                 .genero(crearPersonaDto.getGenero())
                 .build();
-
         return personaRepository.save(persona);
+
+    }
+
+    public Boolean existePersonaPorDocumentoIdentidad(String documentoIdentidad) {
+        return personaRepository
+                .exists(Example.of(PersonaEntity.builder().documentoIdentidad(documentoIdentidad).build()));
     }
 }
