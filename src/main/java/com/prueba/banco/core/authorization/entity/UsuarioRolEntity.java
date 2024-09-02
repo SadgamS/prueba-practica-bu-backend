@@ -38,6 +38,7 @@ public class UsuarioRolEntity extends AuditEntity{
     @JoinColumn(name = "id_usuario", referencedColumnName = "id")
     private UsuarioEntity usuario;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "id_rol", referencedColumnName = "id")
     private RolEntity rol;
