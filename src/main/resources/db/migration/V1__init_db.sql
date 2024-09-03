@@ -112,7 +112,3 @@ VALUES(1, 'admin', '$2a$10$q1mSg8kzD7PnaUA9huv67OPoLPR4ijax.Wu8OoNfEdqKljeVY0W02
 INSERT INTO usuarios.usuarios_roles
 (id_usuario, id_rol, "_creado_por", "_estado", "_fecha_creacion", "_fecha_modificacion", "_modificado_por", "_transaccion")
 VALUES(1, 1, 1, 'ACTIVO', now(), NULL, NULL, 'CREACION');
-
-INSERT INTO usuarios.usuarios_roles
-(id_usuario, id_rol, "_creado_por", "_estado", "_fecha_creacion", "_fecha_modificacion", "_modificado_por", "_transaccion")
-VALUES(1, 2, 1, 'ACTIVO', now(), NULL, NULL, 'CREACION');

@@ -7,9 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.util.Set;
-
-import com.prueba.banco.application.cuenta.entity.CuentaEntity;
 
 @Getter
 @Setter
@@ -22,7 +19,9 @@ public class RespuestaClienteDto {
 
     private String nombres;
 
-    private String apellidos;
+    private String apellidoPaterno;
+
+    private String apellidoMaterno;
 
     private String documentoIdentidad;
 
@@ -31,8 +30,6 @@ public class RespuestaClienteDto {
     private LocalDate fechaNacimiento;
 
     private String genero;
-
-    private Set<CuentaEntity> cuentas;
 
     private String estado;
 

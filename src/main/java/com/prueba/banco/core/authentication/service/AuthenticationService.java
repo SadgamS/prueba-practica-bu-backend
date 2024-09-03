@@ -28,9 +28,19 @@ public class AuthenticationService {
 
         var jwtToken = jwtService.generateToken(usuario);
 
+        String nombreCompleto = usuario.getPersona().getNombres()
+                + " "
+                + usuario.getPersona().getApellidoPaterno()
+                + " "
+                + usuario.getPersona().getApellidoMaterno();
+
+        String rol = usuario.getRoles().stream().findFirst().get().getRol().getNombre().toString();
+
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .usuario(usuario.getUsername())
+                .nombreCompleto(nombreCompleto)
+                .rol(rol)
                 .build();
     }
 
@@ -46,9 +56,19 @@ public class AuthenticationService {
 
         var jwtToken = jwtService.generateToken(usuario);
 
+        String nombreCompleto = usuario.getPersona().getNombres()
+                + " "
+                + usuario.getPersona().getApellidoPaterno()
+                + " "
+                + usuario.getPersona().getApellidoMaterno();
+
+        String rol = usuario.getRoles().stream().findFirst().get().getRol().getNombre().toString();
+
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .usuario(usuario.getUsername())
+                .nombreCompleto(nombreCompleto)
+                .rol(rol)
                 .build();
     }
 

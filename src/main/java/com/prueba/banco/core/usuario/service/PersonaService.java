@@ -28,6 +28,18 @@ public class PersonaService {
 
     }
 
+    public Long editarPersona(PersonaEntity persona) {
+        var personaExistente = personaRepository.findById(persona.getId()).orElseThrow(() -> new RuntimeException("Persona no encontrada"));
+        personaExistente.setNombres(persona.getNombres());
+        personaExistente.setApellidoPaterno(persona.getApellidoPaterno());
+        personaExistente.setApellidoMaterno(persona.getApellidoMaterno());
+        personaExistente.setTipoDocumento(persona.getTipoDocumento());
+        personaExistente.setDocumentoIdentidad(persona.getDocumentoIdentidad());
+        personaExistente.setFechaNacimiento(persona.getFechaNacimiento());
+        personaExistente.setGenero(persona.getGenero());
+        return personaRepository.save(personaExistente).getId();
+    }
+
     public Boolean existePersonaPorDocumentoIdentidad(String documentoIdentidad) {
         return personaRepository
                 .exists(Example.of(PersonaEntity.builder().documentoIdentidad(documentoIdentidad).build()));

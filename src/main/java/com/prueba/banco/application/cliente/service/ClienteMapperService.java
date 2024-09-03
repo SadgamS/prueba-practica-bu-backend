@@ -9,13 +9,12 @@ public class ClienteMapperService {
         return RespuestaClienteDto.builder()
                 .id(clienteEntity.getId())
                 .nombres(clienteEntity.getUsuario().getPersona().getNombres())
-                .apellidos(clienteEntity.getUsuario().getPersona().getApellidoPaterno() + " "
-                        + clienteEntity.getUsuario().getPersona().getApellidoMaterno())
+                .apellidoPaterno(clienteEntity.getUsuario().getPersona().getApellidoPaterno())
+                .apellidoMaterno(clienteEntity.getUsuario().getPersona().getApellidoMaterno())
                 .documentoIdentidad(clienteEntity.getUsuario().getPersona().getDocumentoIdentidad())
                 .tipoDocumento(clienteEntity.getUsuario().getPersona().getTipoDocumento())
                 .fechaNacimiento(clienteEntity.getUsuario().getPersona().getFechaNacimiento())
                 .genero(clienteEntity.getUsuario().getPersona().getGenero())
-                .cuentas(clienteEntity.getCuentas())
                 .estado(clienteEntity.getEstado())
                 .build();
 
